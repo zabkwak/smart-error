@@ -4,11 +4,12 @@ const expect = require('chai').expect;
 
 const MESSAGE = 'Test Error';
 const CODE = 'test';
+const PAYLOAD = { field: 'test' };
 const DEFAULT_MESSAGE = 'Unknown error';
 const DEFAULT_CODE = 'unknown';
 
 describe('Attributes instance', () => {
-    
+
     it('creates new instance of error with default values', (done) => {
         const e = new Err();
         expect(e instanceof Err).to.be.true;
@@ -41,6 +42,30 @@ describe('Attributes instance', () => {
         expect(e.code).to.be.equal('ERR_TEST');
         done();
     });
+
+    it('creates new instance of error with string message, code and payload', (done) => {
+        const e = new Err(MESSAGE, CODE, PAYLOAD);
+        expect(e instanceof Err).to.be.true;
+        expect(e instanceof Error).to.be.true;
+        expect(e).to.have.all.keys(['message', 'code', 'field']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
+        done();
+    });
+
+    it('creates new instance of error with string message, code and payload which have message key', (done) => {
+        const e = new Err(MESSAGE, CODE, Object.assign(PAYLOAD, { message: 'Invalid message' }));
+        expect(e instanceof Err).to.be.true;
+        expect(e instanceof Error).to.be.true;
+        expect(e).to.have.all.keys(['message', 'code', 'field']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
+        done();
+    });
 });
 
 describe('Node.js Error instance', () => {
@@ -66,18 +91,31 @@ describe('Node.js Error instance', () => {
         expect(e.code).to.be.equal('ERR_TEST');
         done();
     });
+
+    it('creates new instance of error with nodejs Error instance, custom code and payload', (done) => {
+        const e = new Err(new Error(MESSAGE), CODE, PAYLOAD);
+        expect(e instanceof Err).to.be.true;
+        expect(e instanceof Error).to.be.true;
+        expect(e).to.have.all.keys(['message', 'code', 'field']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
+        done();
+    });
 });
 
 describe('Module Error instance', () => {
 
     it('creates new instance of error with nodejs Error instance', (done) => {
-        const e = new Err(new Err(MESSAGE, 'test'));
+        const e = new Err(new Err(MESSAGE, 'test', PAYLOAD));
         expect(e instanceof Err).to.be.true;
         expect(e instanceof Error).to.be.true;
-        expect(e).to.have.all.keys(['message', 'code']);
+        expect(e).to.have.all.keys(['message', 'code', 'field']);
         expect(e.stack).to.be.a('string');
         expect(e.message).to.be.equal(MESSAGE);
         expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
         done();
     });
 });
@@ -105,5 +143,20 @@ describe('Object instance', () => {
         expect(e.code).to.be.equal('ERR_TEST');
         done();
     });
-   
+
+    it('creates new instance of error with object message with message, code and payload', (done) => {
+        const e = new Err({ message: MESSAGE, code: 'ERR_TEST', payload: PAYLOAD });
+        expect(e instanceof Err).to.be.true;
+        expect(e instanceof Error).to.be.true;
+        expect(e).to.have.all.keys(['message', 'code', 'field']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
+        done();
+    });
 });
+
+// TODO clone method
+// TODO extend
+// TODO register errors for docs
