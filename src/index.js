@@ -41,6 +41,15 @@ class SmartError {
     }
 
     /**
+     * Clones current instance and creates new one.
+     * 
+     * @returns {SmartError}
+     */
+    clone() {
+        return new this.constructor(this);
+    }
+
+    /**
      * Gets the upper cased error with ERR_ prefix from the code. If the code already has the prefix, the code is not altered.
      * 
      * @param {string} code 
