@@ -1,12 +1,28 @@
 # SmartError
+Subclass of Node.js [Error](https://nodejs.org/api/errors.html#errors_class_system_error) for unification of errors.  
 
-
+The instance has `message` and `code` attributes for recognizing the error type and base info about the Error. The constructor accepts the `payload` field which is parsed as instance's attributes.
 
 ## Installation
-
 ```bash
 $ npm install smart-error
 ```
+
+## Usage
+```javascript
+// This will override default Node.js Error
+import Error from 'smart-error';
+
+// It throws the catchable error
+throw new Error('User already exists in database', 'existing_user', { email: 'test@test.com' });
+// The fields are 
+//  message -> User already exists in database
+//  code -> ERR_EXISTING_USER
+//  email -> test@test.com
+```
+
+## TODO
+- registration of custom errors for documentation of codes
 
 ## Classes
 

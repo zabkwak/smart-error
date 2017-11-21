@@ -174,7 +174,7 @@ describe('Methods', () => {
 
 describe('Inheritance', () => {
 
-    class CustomError extends Err { 
+    class CustomError extends Err {
         test() {
             return 'test';
         }
@@ -248,4 +248,19 @@ describe('Inheritance', () => {
     });
 });
 
-// TODO register errors for docs
+describe('Throwable', () => {
+    it('throws the error instance', (done) => {
+        try {
+            throw new Err(MESSAGE, CODE, PAYLOAD);
+        } catch (e) {
+            expect(e).to.be.instanceOf(Err);
+            expect(e).to.be.instanceOf(Error);
+            expect(e).to.have.all.keys(['message', 'code', 'field']);
+            expect(e.stack).to.be.a('string');
+            expect(e.message).to.be.equal(MESSAGE);
+            expect(e.code).to.be.equal('ERR_TEST');
+            expect(e.field).to.be.equal('test');
+            done();
+        }
+    });
+});
