@@ -1,6 +1,6 @@
 {
   "name": "smart-error",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Subclass of Node.js Error for unification of errors.",
   "main": "index.js",
   "scripts": {

@@ -1,3 +1,5 @@
 /src
 /.babelrc
 /__tests__
+/.npmignore
+/.gitignore
