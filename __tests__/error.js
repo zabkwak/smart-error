@@ -170,6 +170,41 @@ describe('Methods', () => {
         expect(e.field).to.be.equal('test');
         done();
     });
+
+    it('converts the error to JSON without stack and without payload', (done) => {
+        const e = new Err(MESSAGE, CODE);
+        const s = JSON.stringify({ message: MESSAGE, code: 'ERR_TEST' });
+        expect(e.toJSON()).to.be.equal(s);
+        done();
+    });
+
+    it('converts the error to JSON without stack', (done) => {
+        const e = new Err(MESSAGE, CODE, PAYLOAD);
+        const s = JSON.stringify({ message: MESSAGE, code: 'ERR_TEST', field: 'test' });
+        expect(e.toJSON()).to.be.equal(s);
+        done();
+    });
+
+    it('converts the error to JSON with stack', (done) => {
+        const e = new Err(MESSAGE, CODE);
+        const parsed = JSON.parse(e.toJSON(true));
+        expect(parsed).to.have.all.keys(['message', 'code', 'stack']);
+        expect(parsed.stack).to.be.a('string');
+        expect(parsed.message).to.be.equal(MESSAGE);
+        expect(parsed.code).to.be.equal('ERR_TEST');
+        done();
+    });
+
+    it('converts the error to JSON with stack and payload', (done) => {
+        const e = new Err(MESSAGE, CODE, PAYLOAD);
+        const parsed = JSON.parse(e.toJSON(true));
+        expect(parsed).to.have.all.keys(['message', 'code', 'field', 'stack']);
+        expect(parsed.stack).to.be.a('string');
+        expect(parsed.message).to.be.equal(MESSAGE);
+        expect(parsed.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
+        done();
+    });
 });
 
 describe('Inheritance', () => {

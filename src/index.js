@@ -50,6 +50,30 @@ class SmartError {
     }
 
     /**
+     * Converts the instance to JSON string. 
+     * 
+     * @param {boolean} stack If true the stack is added in the JSON string.
+     * @returns {string}
+     */
+    toJSON(stack = false) {
+        const a = [];
+        if (!stack) {
+            a.push('stack');
+        }
+        const o = {};
+        for (let k in this) {
+            if (a.indexOf(k) >= 0) {
+                continue;
+            }
+            o[k] = this[k];
+        }
+        if (stack) {
+            o.stack = this.stack;
+        }
+        return JSON.stringify(o);
+    }
+
+    /**
      * Gets the upper cased error with ERR_ prefix from the code. If the code already has the prefix, the code is not altered.
      * 
      * @param {string} code 

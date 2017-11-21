@@ -46,6 +46,7 @@ throw new Error('User already exists in database', 'existing_user', { email: 'te
 * [SmartError](#SmartError)
     * [new SmartError(message, code, payload)](#new_SmartError_new)
     * [.clone()](#SmartError+clone) ⇒ [<code>SmartError</code>](#SmartError)
+    * [.toJSON(stack)](#SmartError+toJSON) ⇒ <code>string</code>
     * [._getCode(code)](#SmartError+_getCode)
     * [._setPayload(payload)](#SmartError+_setPayload)
     * [._parsePayload(err)](#SmartError+_parsePayload) ⇒ <code>Object</code>
@@ -68,6 +69,17 @@ Creates new instance of SmartError.
 Clones current instance and creates new one.
 
 **Kind**: instance method of [<code>SmartError</code>](#SmartError)
+<a name="SmartError+toJSON"></a>
+
+### smartError.toJSON(stack) ⇒ <code>string</code>
+Converts the instance to JSON string.
+
+**Kind**: instance method of [<code>SmartError</code>](#SmartError)
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| stack | <code>boolean</code> | <code>false</code> | If true the stack is added in the JSON string. |
+
 <a name="SmartError+_getCode"></a>
 
 ### smartError._getCode(code)
