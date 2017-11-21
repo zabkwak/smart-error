@@ -1,0 +1,30 @@
+{
+  "name": "smart-error",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha __tests__ --recursive --compilers js:babel-core/register",
+    "prepublish": "./node_modules/.bin/babel ./src --out-dir ./dist && echo module.exports = require('./dist'); > index.js",
+    "postpublish": "rm -rf ./dist && rm -f ./index.js"
+  },
+  "author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zabkwak/smart-error.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zabkwak/smart-error/issues"
+  },
+  "homepage": "https://github.com/zabkwak/smart-error#readme",
+  "keywords": [
+    "error"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2"
+  }
+}
