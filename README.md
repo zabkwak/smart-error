@@ -21,9 +21,6 @@ throw new Error('User already exists in database', 'existing_user', { email: 'te
 //  email -> test@test.com
 ```
 
-## TODO
-- registration of custom errors for documentation of codes
-
 ## Classes
 
 <dl>
@@ -46,7 +43,7 @@ throw new Error('User already exists in database', 'existing_user', { email: 'te
 * [SmartError](#SmartError)
     * [new SmartError(message, code, payload)](#new_SmartError_new)
     * [.clone()](#SmartError+clone) ⇒ [<code>SmartError</code>](#SmartError)
-    * [.toJSON(stack)](#SmartError+toJSON) ⇒ <code>string</code>
+    * [.toJSON(stack)](#SmartError+toJSON) ⇒ <code>Object</code>
     * [._getCode(code)](#SmartError+_getCode)
     * [._setPayload(payload)](#SmartError+_setPayload)
     * [._parsePayload(err)](#SmartError+_parsePayload) ⇒ <code>Object</code>
@@ -71,14 +68,14 @@ Clones current instance and creates new one.
 **Kind**: instance method of [<code>SmartError</code>](#SmartError)
 <a name="SmartError+toJSON"></a>
 
-### smartError.toJSON(stack) ⇒ <code>string</code>
-Converts the instance to JSON string.
+### smartError.toJSON(stack) ⇒ <code>Object</code>
+Converts the instance to JSON object.
 
 **Kind**: instance method of [<code>SmartError</code>](#SmartError)
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| stack | <code>boolean</code> | <code>false</code> | If true the stack is added in the JSON string. |
+| stack | <code>boolean</code> | <code>false</code> | If true the stack is added in the JSON object. |
 
 <a name="SmartError+_getCode"></a>
 

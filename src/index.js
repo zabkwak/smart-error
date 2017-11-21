@@ -50,10 +50,10 @@ class SmartError {
     }
 
     /**
-     * Converts the instance to JSON string. 
+     * Converts the instance to JSON object. 
      * 
-     * @param {boolean} stack If true the stack is added in the JSON string.
-     * @returns {string}
+     * @param {boolean} stack If true the stack is added in the JSON object.
+     * @returns {Object}
      */
     toJSON(stack = false) {
         const a = [];
@@ -70,7 +70,7 @@ class SmartError {
         if (stack) {
             o.stack = this.stack;
         }
-        return JSON.stringify(o);
+        return o;
     }
 
     /**
