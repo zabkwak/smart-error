@@ -171,23 +171,23 @@ describe('Methods', () => {
         done();
     });
 
-    it('converts the error to JSON without stack and without payload', (done) => {
+    it('converts the error to JSON using JSON.stringify without stack and without payload', (done) => {
         const e = new Err(MESSAGE, CODE);
         const s = JSON.stringify({ message: MESSAGE, code: 'ERR_TEST' });
-        expect(e.toJSON()).to.be.equal(s);
+        expect(JSON.stringify(e)).to.be.equal(s);
         done();
     });
 
-    it('converts the error to JSON without stack', (done) => {
+    it('converts the error to JSON using JSON.stringify without stack', (done) => {
         const e = new Err(MESSAGE, CODE, PAYLOAD);
         const s = JSON.stringify({ message: MESSAGE, code: 'ERR_TEST', field: 'test' });
-        expect(e.toJSON()).to.be.equal(s);
+        expect(JSON.stringify(e)).to.be.equal(s);
         done();
     });
 
     it('converts the error to JSON with stack', (done) => {
         const e = new Err(MESSAGE, CODE);
-        const parsed = JSON.parse(e.toJSON(true));
+        const parsed = e.toJSON(true);
         expect(parsed).to.have.all.keys(['message', 'code', 'stack']);
         expect(parsed.stack).to.be.a('string');
         expect(parsed.message).to.be.equal(MESSAGE);
@@ -197,7 +197,7 @@ describe('Methods', () => {
 
     it('converts the error to JSON with stack and payload', (done) => {
         const e = new Err(MESSAGE, CODE, PAYLOAD);
-        const parsed = JSON.parse(e.toJSON(true));
+        const parsed = e.toJSON(true);
         expect(parsed).to.have.all.keys(['message', 'code', 'field', 'stack']);
         expect(parsed.stack).to.be.a('string');
         expect(parsed.message).to.be.equal(MESSAGE);
