@@ -21,20 +21,16 @@ class SmartError {
     constructor(message = DEFAULT_MESSAGE, code = DEFAULT_CODE, payload = {}) {
         if (message instanceof this.constructor) {
             const err = message;
-            this.message = err.message;
+            message = err.message;
             code = err.code;
             payload = this._parsePayload(err);
-        } else if (message instanceof Error) {
-            const err = message;
-            this.message = err.message || DEFAULT_MESSAGE;
         } else if (typeof message === 'object') {
             const err = message;
-            this.message = err.message || DEFAULT_MESSAGE;
-            code = err.code || DEFAULT_CODE;
-            payload = err.payload;
-        } else {
-            this.message = message;
+            message = err.message || DEFAULT_MESSAGE;
+            code = err.code || code;
+            payload = err.payload || payload;
         }
+        this.message = message;
         this.code = this._getCode(code);
         this._setPayload(payload);
         Error.captureStackTrace(this, this.constructor);

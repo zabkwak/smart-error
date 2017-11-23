@@ -103,6 +103,34 @@ describe('Node.js Error instance', () => {
         expect(e.field).to.be.equal('test');
         done();
     });
+
+    it('creates new instance of error with nodejs Error instance with code property', (done) => {
+        const err = new Error(MESSAGE);
+        err.code = 'ERR_TEST';
+        const e = new Err(err);
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        done();
+    });
+
+    it('creates new instance of error with nodejs Error instance with code property and payload', (done) => {
+        const err = new Error(MESSAGE);
+        err.code = 'ERR_TEST';
+        err.payload = PAYLOAD;
+        const e = new Err(err);
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code', 'field']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
+        done();
+    });
 });
 
 describe('Module Error instance', () => {
