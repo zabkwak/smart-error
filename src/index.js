@@ -1,4 +1,6 @@
-const util = require('util');
+import util from 'util';
+
+import Registrator from './registrator';
 
 const DEFAULT_MESSAGE = 'Unknown error';
 const DEFAULT_CODE = 'unknown';
@@ -112,6 +114,20 @@ class SmartError {
         return o;
     }
 }
+
+const registrator = new Registrator();
+
+SmartError.register = function (code, message = DEFAULT_MESSAGE, payload = {}) {
+    registrator.register(this, code, message, payload);
+};
+
+SmartError.unregister = function (code) {
+    registrator.unregister(this, code);
+};
+
+Object.defineProperty(SmartError, 'codes', {
+    get: () => registrator.codes()
+});
 
 util.inherits(SmartError, Error);
 

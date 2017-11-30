@@ -312,6 +312,7 @@ describe('Inheritance', () => {
 });
 
 describe('Throwable', () => {
+
     it('throws the error instance', (done) => {
         try {
             throw new Err(MESSAGE, CODE, PAYLOAD);
@@ -326,4 +327,75 @@ describe('Throwable', () => {
             done();
         }
     });
+});
+
+describe('Registration of errors', () => {
+
+    it('registers the error with defined message and payload and calls it with default attributes', (done) => {
+        Err.register(CODE, MESSAGE, PAYLOAD);
+        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err.codes.length).to.be.equal(1);
+        const e = Err[CODE]();
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code', 'field']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
+        Err.unregister(CODE);
+        done();
+    });
+
+    it('registers the error with defined message in registration and calls it with default attributes', (done) => {
+        Err.register(CODE, MESSAGE);
+        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err.codes.length).to.be.equal(1);
+        const e = Err[CODE]();
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        Err.unregister(CODE);
+        done();
+    });
+
+    it('registers the error without defined message in registration and calls it with default attributes', (done) => {
+        Err.register(CODE);
+        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err.codes.length).to.be.equal(1);
+        const e = Err[CODE]();
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(DEFAULT_MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        Err.unregister(CODE);
+        done();
+    });
+
+    it('registers unsupported operation error', (done) => {
+        const message = 'This operation is not supported';
+        const code = 'unsupported_operation';
+        Err.register(code, message);
+        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', code]);
+        expect(Err.codes.length).to.be.equal(1);
+        const e = Err.unsupported_operation();
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(message);
+        expect(e.code).to.be.equal('ERR_UNSUPPORTED_OPERATION');  
+        Err.unregister(code);
+        done();
+    });
+
+    // TODO all defined and attributes calls
+    // TODO unregister tests
+    // TODO docs test
+    // TODO test on inherited class
 });
