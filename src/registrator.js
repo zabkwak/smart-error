@@ -1,9 +1,21 @@
+/**
+ * Class for registration of errors.
+ */
 export default class Registrator {
 
     constructor() {
         this._codes = {};
     }
 
+    /**
+     * Registers the error to the SmartError object. The code is accesible as the object's function with message and payload fields.
+     * 
+     * @param {SmartError} SmartError 
+     * @param {string} code 
+     * @param {string} message 
+     * @param {Object} payload 
+     * @param {string} description 
+     */
     register(SmartError, code, message, payload, description = null) {
         if (this._codes[code]) {
             console.error(`Error with code '${code}' is already registered.`);
@@ -12,9 +24,7 @@ export default class Registrator {
         this._codes[code] = {
             code: code,
             description: description,
-            function: (m = message, p = payload) => {
-                return new SmartError(m, code, p);
-            }
+            function: (m = message, p = payload) => new SmartError(m, code, p)
         }
         Object.defineProperty(SmartError, code, {
             get: () => this._call(code, SmartError),
@@ -23,6 +33,12 @@ export default class Registrator {
         });
     }
 
+    /**
+     * Removes the error from the SmartError object.
+     * 
+     * @param {SmartError} SmartError 
+     * @param {string} code 
+     */
     unregister(SmartError, code) {
         if (!this._codes[code]) {
             console.error(`Error with code '${code}' is not registered.`);
@@ -32,10 +48,25 @@ export default class Registrator {
         delete SmartError[code];
     }
 
+    /**
+     * Gets all registered codes as an array.
+     * 
+     * @returns {string[]}
+     */
     codes() {
         return Object.keys(this._codes);
     }
 
+    /**
+     * @typedef DocsObject
+     * @property {object} [code]
+     * @param {string} code.description
+     */
+    /**
+     * Gets the documentation of the registered error.
+     * 
+     * @returns {DocsObject}
+     */
     docs() {
         const o = {};
         for (let code in this._codes) {
@@ -46,6 +77,12 @@ export default class Registrator {
         return o;
     }
 
+    /**
+     * Calls the registered function.
+     * 
+     * @param {string} code 
+     * @param {SmartError} SmartError 
+     */
     _call(code, SmartError) {
         return this._codes[code].function;
     }

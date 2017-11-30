@@ -117,10 +117,23 @@ class SmartError {
 
 const registrator = new Registrator();
 
+/**
+ * Registers the error to the object. The code is accesible as the object's function with message and payload fields.
+ * 
+ * @param {string} code 
+ * @param {string} message 
+ * @param {object} payload 
+ * @param {string} description 
+ */
 SmartError.register = function (code, message = DEFAULT_MESSAGE, payload = {}, description = null) {
     registrator.register(this, code, message, payload, description);
 };
 
+/**
+ * Removes the error from th object.
+ * 
+ * @param {*} code 
+ */
 SmartError.unregister = function (code) {
     registrator.unregister(this, code);
 };
