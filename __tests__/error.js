@@ -235,82 +235,6 @@ describe('Methods', () => {
     });
 });
 
-describe('Inheritance', () => {
-
-    class CustomError extends Err {
-        test() {
-            return 'test';
-        }
-    }
-
-    it('creates new instance of error with default values', (done) => {
-        const e = new CustomError();
-        expect(e).instanceOf(CustomError);
-        expect(e).instanceOf(Err);
-        expect(e).instanceOf(Error);
-        expect(e).to.have.all.keys(['message', 'code']);
-        expect(e.stack).to.be.a('string');
-        expect(e.message).to.be.equal('Unknown error');
-        expect(e.code).to.be.equal('ERR_UNKNOWN');
-        expect(e.test()).to.be.equal('test');
-        done();
-    });
-
-    it('creates new instance of error with string message', (done) => {
-        const e = new CustomError(MESSAGE);
-        expect(e).instanceOf(CustomError);
-        expect(e).to.be.instanceOf(Err);
-        expect(e).to.be.instanceOf(Error);
-        expect(e).to.have.all.keys(['message', 'code']);
-        expect(e.stack).to.be.a('string');
-        expect(e.message).to.be.equal(MESSAGE);
-        expect(e.code).to.be.equal('ERR_UNKNOWN');
-        expect(e.test()).to.be.equal('test');
-        done();
-    });
-
-    it('creates new instance of error with string message and code', (done) => {
-        const e = new CustomError(MESSAGE, CODE);
-        expect(e).instanceOf(CustomError);
-        expect(e).to.be.instanceOf(Err);
-        expect(e).to.be.instanceOf(Error);
-        expect(e).to.have.all.keys(['message', 'code']);
-        expect(e.stack).to.be.a('string');
-        expect(e.message).to.be.equal(MESSAGE);
-        expect(e.code).to.be.equal('ERR_TEST');
-        expect(e.test()).to.be.equal('test');
-        done();
-    });
-
-    it('creates new instance of error with string message, code and payload', (done) => {
-        const e = new CustomError(MESSAGE, CODE, PAYLOAD);
-        expect(e).instanceOf(CustomError);
-        expect(e).to.be.instanceOf(Err);
-        expect(e).to.be.instanceOf(Error);
-        expect(e).to.have.all.keys(['message', 'code', 'field']);
-        expect(e.stack).to.be.a('string');
-        expect(e.message).to.be.equal(MESSAGE);
-        expect(e.code).to.be.equal('ERR_TEST');
-        expect(e.field).to.be.equal('test');
-        expect(e.test()).to.be.equal('test');
-        done();
-    });
-
-    it('creates new instance of error with string message, code and payload which have message key', (done) => {
-        const e = new CustomError(MESSAGE, CODE, Object.assign(PAYLOAD, { message: 'Invalid message' }));
-        expect(e).instanceOf(CustomError);
-        expect(e).to.be.instanceOf(Err);
-        expect(e).to.be.instanceOf(Error);
-        expect(e).to.have.all.keys(['message', 'code', 'field']);
-        expect(e.stack).to.be.a('string');
-        expect(e.message).to.be.equal(MESSAGE);
-        expect(e.code).to.be.equal('ERR_TEST');
-        expect(e.field).to.be.equal('test');
-        expect(e.test()).to.be.equal('test');
-        done();
-    });
-});
-
 describe('Throwable', () => {
 
     it('throws the error instance', (done) => {
@@ -509,6 +433,99 @@ describe('Registration of errors', () => {
     });
 
     // TODO test on inherited class
+});
+
+describe('Inheritance', () => {
+
+    class CustomError extends Err {
+        test() {
+            return 'test';
+        }
+    }
+
+    it('creates new instance of error with default values', (done) => {
+        const e = new CustomError();
+        expect(e).instanceOf(CustomError);
+        expect(e).instanceOf(Err);
+        expect(e).instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal('Unknown error');
+        expect(e.code).to.be.equal('ERR_UNKNOWN');
+        expect(e.test()).to.be.equal('test');
+        done();
+    });
+
+    it('creates new instance of error with string message', (done) => {
+        const e = new CustomError(MESSAGE);
+        expect(e).instanceOf(CustomError);
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_UNKNOWN');
+        expect(e.test()).to.be.equal('test');
+        done();
+    });
+
+    it('creates new instance of error with string message and code', (done) => {
+        const e = new CustomError(MESSAGE, CODE);
+        expect(e).instanceOf(CustomError);
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.test()).to.be.equal('test');
+        done();
+    });
+
+    it('creates new instance of error with string message, code and payload', (done) => {
+        const e = new CustomError(MESSAGE, CODE, PAYLOAD);
+        expect(e).instanceOf(CustomError);
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code', 'field']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
+        expect(e.test()).to.be.equal('test');
+        done();
+    });
+
+    it('creates new instance of error with string message, code and payload which have message key', (done) => {
+        const e = new CustomError(MESSAGE, CODE, Object.assign(PAYLOAD, { message: 'Invalid message' }));
+        expect(e).instanceOf(CustomError);
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code', 'field']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
+        expect(e.test()).to.be.equal('test');
+        done();
+    });
+
+    it('registers error to the inherited class', (done) => {
+        CustomError.register(CODE, MESSAGE, PAYLOAD);
+        expect(CustomError).to.have.all.keys([CODE]);
+        expect(CustomError.codes.length).to.be.equal(1);
+        const e = CustomError[CODE]();
+        expect(e).to.be.instanceOf(Err);
+        expect(e).to.be.instanceOf(Error);
+        expect(e).to.have.all.keys(['message', 'code', 'field']);
+        expect(e.stack).to.be.a('string');
+        expect(e.message).to.be.equal(MESSAGE);
+        expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.field).to.be.equal('test');
+        CustomError.unregister(CODE);
+        expect(CustomError.codes.length).to.be.equal(0);
+        done();
+    });
 });
 
 // TODO docs test
