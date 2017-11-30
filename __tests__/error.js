@@ -5,6 +5,7 @@ const expect = require('chai').expect;
 const MESSAGE = 'Test Error';
 const CODE = 'test';
 const PAYLOAD = { field: 'test' };
+const DESCRIPTION = 'Test error for tests';
 const DEFAULT_MESSAGE = 'Unknown error';
 const DEFAULT_CODE = 'unknown';
 
@@ -524,6 +525,25 @@ describe('Inheritance', () => {
         expect(e.field).to.be.equal('test');
         CustomError.unregister(CODE);
         expect(CustomError.codes.length).to.be.equal(0);
+        done();
+    });
+});
+
+describe('Docs', () => {
+
+    it('registers the error and checks it\'s docs', (done) => {
+        Err.register(CODE, MESSAGE, PAYLOAD, DESCRIPTION);
+        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err.codes.length).to.be.equal(1);
+        expect(Err.docs).to.be.an('object');
+        expect(Err.docs).to.have.all.keys([CODE]);
+        expect(Err.docs[CODE]).to.have.all.keys(['description']);
+        expect(Err.docs[CODE].description).to.be.equal(DESCRIPTION);
+        Err.unregister(CODE);
+        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err.codes.length).to.be.equal(0);   
+        expect(Err.docs).to.be.an('object');
+        expect(Err.docs[CODE]).to.be.undefined;
         done();
     });
 });

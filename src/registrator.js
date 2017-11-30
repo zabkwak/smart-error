@@ -36,6 +36,16 @@ export default class Registrator {
         return Object.keys(this._codes);
     }
 
+    docs() {
+        const o = {};
+        for (let code in this._codes) {
+            o[code] = {
+                description: this._codes[code].description
+            }
+        }
+        return o;
+    }
+
     _call(code, SmartError) {
         return this._codes[code].function;
     }

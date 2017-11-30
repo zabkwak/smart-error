@@ -117,16 +117,21 @@ class SmartError {
 
 const registrator = new Registrator();
 
-SmartError.register = function (code, message = DEFAULT_MESSAGE, payload = {}) {
-    registrator.register(this, code, message, payload);
+SmartError.register = function (code, message = DEFAULT_MESSAGE, payload = {}, description = null) {
+    registrator.register(this, code, message, payload, description);
 };
 
 SmartError.unregister = function (code) {
     registrator.unregister(this, code);
 };
 
-Object.defineProperty(SmartError, 'codes', {
-    get: () => registrator.codes()
+Object.defineProperties(SmartError, {
+    codes: {
+        get: () => registrator.codes()
+    },
+    docs: {
+        get: () => registrator.docs()
+    }
 });
 
 util.inherits(SmartError, Error);
