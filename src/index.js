@@ -132,7 +132,7 @@ SmartError.register = function (code, message = DEFAULT_MESSAGE, payload = {}, d
 /**
  * Removes the error from th object.
  * 
- * @param {*} code 
+ * @param {string} code 
  */
 SmartError.unregister = function (code) {
     registrator.unregister(this, code);

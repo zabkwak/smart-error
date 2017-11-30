@@ -28,10 +28,32 @@ throw new Error('User already exists in database', 'existing_user', { email: 'te
 <dd></dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#register">register(SmartError, code, message, payload, description)</a></dt>
+<dd><p>Registers the error to the SmartError object. The code is accesible as the object&#39;s function with message and payload fields.</p>
+</dd>
+<dt><a href="#unregister">unregister(SmartError, code)</a></dt>
+<dd><p>Removes the error from the SmartError object.</p>
+</dd>
+<dt><a href="#codes">codes()</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
+<dd><p>Gets all registered codes as an array.</p>
+</dd>
+<dt><a href="#docs">docs()</a> ⇒ <code><a href="#DocsObject">DocsObject</a></code></dt>
+<dd><p>Gets the documentation of the registered error.</p>
+</dd>
+<dt><a href="#_call">_call(code, SmartError)</a></dt>
+<dd><p>Calls the registered function.</p>
+</dd>
+</dl>
+
 ## Typedefs
 
 <dl>
 <dt><a href="#ErrorObject">ErrorObject</a></dt>
+<dd></dd>
+<dt><a href="#DocsObject">DocsObject</a></dt>
 <dd></dd>
 </dl>
 
@@ -137,46 +159,7 @@ Removes the error from th object.
 
 | Param | Type |
 | --- | --- |
-| code | <code>\*</code> |
-
-<a name="ErrorObject"></a>
-
-## ErrorObject
-**Kind**: global typedef
-**Properties**
-
-| Name | Type |
-| --- | --- |
-| message | <code>string</code> |
 | code | <code>string</code> |
-| payload | <code>Object</code> |
-
-## Functions
-
-<dl>
-<dt><a href="#register">register(SmartError, code, message, payload, description)</a></dt>
-<dd><p>Registers the error to the SmartError object. The code is accesible as the object&#39;s function with message and payload fields.</p>
-</dd>
-<dt><a href="#unregister">unregister(SmartError, code)</a></dt>
-<dd><p>Removes the error from the SmartError object.</p>
-</dd>
-<dt><a href="#codes">codes()</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
-<dd><p>Gets all registered codes as an array.</p>
-</dd>
-<dt><a href="#docs">docs()</a> ⇒ <code><a href="#DocsObject">DocsObject</a></code></dt>
-<dd><p>Gets the documentation of the registered error.</p>
-</dd>
-<dt><a href="#_call">_call(code, SmartError)</a></dt>
-<dd><p>Calls the registered function.</p>
-</dd>
-</dl>
-
-## Typedefs
-
-<dl>
-<dt><a href="#DocsObject">DocsObject</a></dt>
-<dd></dd>
-</dl>
 
 <a name="register"></a>
 
@@ -187,7 +170,7 @@ Registers the error to the SmartError object. The code is accesible as the objec
 
 | Param | Type | Default |
 | --- | --- | --- |
-| SmartError | <code>SmartError</code> |  |
+| SmartError | [<code>SmartError</code>](#SmartError) |  |
 | code | <code>string</code> |  |
 | message | <code>string</code> |  |
 | payload | <code>Object</code> |  |
@@ -202,7 +185,7 @@ Removes the error from the SmartError object.
 
 | Param | Type |
 | --- | --- |
-| SmartError | <code>SmartError</code> |
+| SmartError | [<code>SmartError</code>](#SmartError) |
 | code | <code>string</code> |
 
 <a name="codes"></a>
@@ -227,7 +210,19 @@ Calls the registered function.
 | Param | Type |
 | --- | --- |
 | code | <code>string</code> |
-| SmartError | <code>SmartError</code> |
+| SmartError | [<code>SmartError</code>](#SmartError) |
+
+<a name="ErrorObject"></a>
+
+## ErrorObject
+**Kind**: global typedef
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| message | <code>string</code> |
+| code | <code>string</code> |
+| payload | <code>Object</code> |
 
 <a name="DocsObject"></a>
 
