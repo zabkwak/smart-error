@@ -72,36 +72,43 @@ describe('Attributes instance', () => {
 describe('Node.js Error instance', () => {
 
     it('creates new instance of error with nodejs Error instance', (done) => {
-        const e = new Err(new Error(MESSAGE));
+        const err = new Error(MESSAGE);
+        const e = new Err(err);
         expect(e).to.be.instanceOf(Err);
         expect(e).to.be.instanceOf(Error);
         expect(e).to.have.all.keys(['message', 'code']);
         expect(e.stack).to.be.a('string');
         expect(e.message).to.be.equal(MESSAGE);
         expect(e.code).to.be.equal('ERR_UNKNOWN');
+        expect(e.stack).to.be.a('string');
+        expect(e.stack).to.be.equal(err.stack);
         done();
     });
 
     it('creates new instance of error with nodejs Error instance and custom code', (done) => {
-        const e = new Err(new Error(MESSAGE), CODE);
+        const err = new Error(MESSAGE);
+        const e = new Err(err, CODE);
         expect(e).to.be.instanceOf(Err);
         expect(e).to.be.instanceOf(Error);
         expect(e).to.have.all.keys(['message', 'code']);
-        expect(e.stack).to.be.a('string');
         expect(e.message).to.be.equal(MESSAGE);
         expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.stack).to.be.a('string');
+        expect(e.stack).to.be.equal(err.stack);
         done();
     });
 
     it('creates new instance of error with nodejs Error instance, custom code and payload', (done) => {
-        const e = new Err(new Error(MESSAGE), CODE, PAYLOAD);
+        const err = new Error(MESSAGE);
+        const e = new Err(err, CODE, PAYLOAD);
         expect(e).to.be.instanceOf(Err);
         expect(e).to.be.instanceOf(Error);
         expect(e).to.have.all.keys(['message', 'code', 'field']);
-        expect(e.stack).to.be.a('string');
         expect(e.message).to.be.equal(MESSAGE);
         expect(e.code).to.be.equal('ERR_TEST');
         expect(e.field).to.be.equal('test');
+        expect(e.stack).to.be.a('string');
+        expect(e.stack).to.be.equal(err.stack);
         done();
     });
 
@@ -112,9 +119,10 @@ describe('Node.js Error instance', () => {
         expect(e).to.be.instanceOf(Err);
         expect(e).to.be.instanceOf(Error);
         expect(e).to.have.all.keys(['message', 'code']);
-        expect(e.stack).to.be.a('string');
         expect(e.message).to.be.equal(MESSAGE);
         expect(e.code).to.be.equal('ERR_TEST');
+        expect(e.stack).to.be.a('string');
+        expect(e.stack).to.be.equal(err.stack);
         done();
     });
 
@@ -126,10 +134,11 @@ describe('Node.js Error instance', () => {
         expect(e).to.be.instanceOf(Err);
         expect(e).to.be.instanceOf(Error);
         expect(e).to.have.all.keys(['message', 'code', 'field']);
-        expect(e.stack).to.be.a('string');
         expect(e.message).to.be.equal(MESSAGE);
         expect(e.code).to.be.equal('ERR_TEST');
         expect(e.field).to.be.equal('test');
+        expect(e.stack).to.be.a('string');
+        expect(e.stack).to.be.equal(err.stack);
         done();
     });
 });
@@ -137,7 +146,8 @@ describe('Node.js Error instance', () => {
 describe('Module Error instance', () => {
 
     it('creates new instance of error with nodejs Error instance', (done) => {
-        const e = new Err(new Err(MESSAGE, 'test', PAYLOAD));
+        const err = new Err(MESSAGE, 'test', PAYLOAD);
+        const e = new Err(err);
         expect(e).to.be.instanceOf(Err);
         expect(e).to.be.instanceOf(Error);
         expect(e).to.have.all.keys(['message', 'code', 'field']);
@@ -145,6 +155,8 @@ describe('Module Error instance', () => {
         expect(e.message).to.be.equal(MESSAGE);
         expect(e.code).to.be.equal('ERR_TEST');
         expect(e.field).to.be.equal('test');
+        expect(e.stack).to.be.a('string');
+        expect(e.stack).to.be.equal(err.stack);
         done();
     });
 });

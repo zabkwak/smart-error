@@ -21,6 +21,10 @@ class SmartError {
      * @param {Object} payload 
      */
     constructor(message = DEFAULT_MESSAGE, code = DEFAULT_CODE, payload = {}) {
+        let nodeError = null;
+        if (message instanceof Error) {
+            nodeError = message;
+        }
         if (message instanceof this.constructor) {
             const err = message;
             message = err.message;
@@ -35,7 +39,15 @@ class SmartError {
         this.message = message;
         this.code = this._getCode(code);
         this._setPayload(payload);
-        Error.captureStackTrace(this, this.constructor);
+        if (nodeError) {
+            Object.defineProperty(this, 'stack', {
+                enumerable: false,
+                writable: false,
+                value: nodeError.stack
+            });
+        } else {
+            Error.captureStackTrace(this, this.constructor);
+        }
     }
 
     /**
