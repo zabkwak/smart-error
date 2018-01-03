@@ -41,8 +41,7 @@ class SmartError {
         this._setPayload(payload);
         if (nodeError) {
             Object.defineProperty(this, 'stack', {
-                enumerable: false,
-                writable: false,
+                configurable: true,
                 value: nodeError.stack
             });
         } else {
