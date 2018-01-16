@@ -10,6 +10,9 @@
   },
   "author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zabkwak/smart-error.git"
