@@ -88,6 +88,9 @@ class SmartError {
      * @param {string} code 
      */
     _getCode(code) {
+        if (typeof code !== 'string') {
+            code = code.toString();
+        }
         if (code.toLowerCase().indexOf('err_') === 0) {
             return code.toUpperCase();
         }
