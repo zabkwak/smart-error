@@ -270,7 +270,7 @@ describe('Registration of errors', () => {
 
     it('registers the error with defined message and payload and calls it with default attributes', (done) => {
         Err.register(CODE, MESSAGE, PAYLOAD);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err).to.have.all.keys(['super_', CODE]);
         expect(Err.codes.length).to.be.equal(1);
         const e = Err[CODE]();
         expect(e).to.be.instanceOf(Err);
@@ -281,14 +281,14 @@ describe('Registration of errors', () => {
         expect(e.code).to.be.equal('ERR_TEST');
         expect(e.field).to.be.equal('test');
         Err.unregister(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err).to.have.all.keys(['super_']);
         expect(Err.codes.length).to.be.equal(0);
         done();
     });
 
     it('registers the error with defined message and payload and calls it with custom attributes', (done) => {
         Err.register(CODE, MESSAGE, PAYLOAD);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err).to.have.all.keys(['super_', CODE]);
         expect(Err.codes.length).to.be.equal(1);
         const e = Err[CODE]('Custom message', { statusCode: 500 });
         expect(e).to.be.instanceOf(Err);
@@ -299,14 +299,14 @@ describe('Registration of errors', () => {
         expect(e.code).to.be.equal('ERR_TEST');
         expect(e.statusCode).to.be.equal(500);
         Err.unregister(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err).to.have.all.keys(['super_']);
         expect(Err.codes.length).to.be.equal(0);
         done();
     });
 
     it('registers the error with defined message and payload and calls it with custom message', (done) => {
         Err.register(CODE, MESSAGE, PAYLOAD);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err).to.have.all.keys(['super_', CODE]);
         expect(Err.codes.length).to.be.equal(1);
         const e = Err[CODE]('Custom message');
         expect(e).to.be.instanceOf(Err);
@@ -317,14 +317,14 @@ describe('Registration of errors', () => {
         expect(e.code).to.be.equal('ERR_TEST');
         expect(e.field).to.be.equal('test');
         Err.unregister(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err).to.have.all.keys(['super_']);
         expect(Err.codes.length).to.be.equal(0);
         done();
     });
 
     it('registers the error with defined message in registration and calls it with default attributes', (done) => {
         Err.register(CODE, MESSAGE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err).to.have.all.keys(['super_', CODE]);
         expect(Err.codes.length).to.be.equal(1);
         const e = Err[CODE]();
         expect(e).to.be.instanceOf(Err);
@@ -334,14 +334,14 @@ describe('Registration of errors', () => {
         expect(e.message).to.be.equal(MESSAGE);
         expect(e.code).to.be.equal('ERR_TEST');
         Err.unregister(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err).to.have.all.keys(['super_']);
         expect(Err.codes.length).to.be.equal(0);
         done();
     });
 
     it('registers the error with defined message in registration and calls it with custom attributes', (done) => {
         Err.register(CODE, MESSAGE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err).to.have.all.keys(['super_', CODE]);
         expect(Err.codes.length).to.be.equal(1);
         const e = Err[CODE]('Custom message', { statusCode: 500 });
         expect(e).to.be.instanceOf(Err);
@@ -352,14 +352,14 @@ describe('Registration of errors', () => {
         expect(e.code).to.be.equal('ERR_TEST');
         expect(e.statusCode).to.be.equal(500);
         Err.unregister(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err).to.have.all.keys(['super_']);
         expect(Err.codes.length).to.be.equal(0);
         done();
     });
 
     it('registers the error with defined message in registration and calls it with custom message', (done) => {
         Err.register(CODE, MESSAGE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err).to.have.all.keys(['super_', CODE]);
         expect(Err.codes.length).to.be.equal(1);
         const e = Err[CODE]('Custom message');
         expect(e).to.be.instanceOf(Err);
@@ -369,14 +369,14 @@ describe('Registration of errors', () => {
         expect(e.message).to.be.equal('Custom message');
         expect(e.code).to.be.equal('ERR_TEST');
         Err.unregister(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err).to.have.all.keys(['super_']);
         expect(Err.codes.length).to.be.equal(0);
         done();
     });
 
     it('registers the error without defined message in registration and calls it with default attributes', (done) => {
         Err.register(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err).to.have.all.keys(['super_', CODE]);
         expect(Err.codes.length).to.be.equal(1);
         const e = Err[CODE]();
         expect(e).to.be.instanceOf(Err);
@@ -386,14 +386,14 @@ describe('Registration of errors', () => {
         expect(e.message).to.be.equal(DEFAULT_MESSAGE);
         expect(e.code).to.be.equal('ERR_TEST');
         Err.unregister(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err).to.have.all.keys(['super_']);
         expect(Err.codes.length).to.be.equal(0);
         done();
     });
 
     it('registers the error without defined message in registration and calls it with custom attributes', (done) => {
         Err.register(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err).to.have.all.keys(['super_', CODE]);
         expect(Err.codes.length).to.be.equal(1);
         const e = Err[CODE]('Custom message', { statusCode: 500 });
         expect(e).to.be.instanceOf(Err);
@@ -404,14 +404,14 @@ describe('Registration of errors', () => {
         expect(e.code).to.be.equal('ERR_TEST');
         expect(e.statusCode).to.be.equal(500);
         Err.unregister(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err).to.have.all.keys(['super_']);
         expect(Err.codes.length).to.be.equal(0);
         done();
     });
 
     it('registers the error without defined message in registration and calls it with custom message', (done) => {
         Err.register(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err).to.have.all.keys(['super_', CODE]);
         expect(Err.codes.length).to.be.equal(1);
         const e = Err[CODE]('Custom message');
         expect(e).to.be.instanceOf(Err);
@@ -421,7 +421,7 @@ describe('Registration of errors', () => {
         expect(e.message).to.be.equal('Custom message');
         expect(e.code).to.be.equal('ERR_TEST');
         Err.unregister(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err).to.have.all.keys(['super_']);
         expect(Err.codes.length).to.be.equal(0);
         done();
     });
@@ -430,7 +430,7 @@ describe('Registration of errors', () => {
         const message = 'This operation is not supported';
         const code = 'unsupported_operation';
         Err.register(code, message);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', code]);
+        expect(Err).to.have.all.keys(['super_', code]);
         expect(Err.codes.length).to.be.equal(1);
         const e = Err.unsupported_operation();
         expect(e).to.be.instanceOf(Err);
@@ -440,7 +440,7 @@ describe('Registration of errors', () => {
         expect(e.message).to.be.equal(message);
         expect(e.code).to.be.equal('ERR_UNSUPPORTED_OPERATION');
         Err.unregister(code);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
+        expect(Err).to.have.all.keys(['super_']);
         expect(Err.codes.length).to.be.equal(0);
         done();
     });
@@ -545,15 +545,15 @@ describe('Docs', () => {
 
     it('registers the error and checks it\'s docs', (done) => {
         Err.register(CODE, MESSAGE, PAYLOAD, DESCRIPTION);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister', CODE]);
+        expect(Err).to.have.all.keys(['super_', CODE]);
         expect(Err.codes.length).to.be.equal(1);
         expect(Err.docs).to.be.an('object');
         expect(Err.docs).to.have.all.keys([CODE]);
         expect(Err.docs[CODE]).to.have.all.keys(['description']);
         expect(Err.docs[CODE].description).to.be.equal(DESCRIPTION);
         Err.unregister(CODE);
-        expect(Err).to.have.all.keys(['register', 'super_', 'unregister']);
-        expect(Err.codes.length).to.be.equal(0);   
+        expect(Err).to.have.all.keys(['super_']);
+        expect(Err.codes.length).to.be.equal(0);
         expect(Err.docs).to.be.an('object');
         expect(Err.docs[CODE]).to.be.undefined;
         done();

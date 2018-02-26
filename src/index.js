@@ -5,7 +5,39 @@ import Registrator from './registrator';
 const DEFAULT_MESSAGE = 'Unknown error';
 const DEFAULT_CODE = 'unknown';
 
+const registrator = new Registrator();
+
 class SmartError {
+
+
+    /**
+     * Registers the error to the object. The code is accesible as the object's function with message and payload fields.
+     * 
+     * @param {string} code 
+     * @param {string} message 
+     * @param {object} payload 
+     * @param {string} description 
+     */
+    static register(code, message = DEFAULT_MESSAGE, payload = {}, description = null) {
+        registrator.register(this, code, message, payload, description);
+    };
+
+    /**
+     * Removes the error from th object.
+     * 
+     * @param {string} code 
+     */
+    static unregister(code) {
+        registrator.unregister(this, code);
+    };
+
+    static get codes() {
+        return registrator.codes();
+    }
+
+    static get docs() {
+        return registrator.docs();
+    }
 
     /**
      * @typedef ErrorObject
@@ -128,38 +160,6 @@ class SmartError {
         return o;
     }
 }
-
-const registrator = new Registrator();
-
-/**
- * Registers the error to the object. The code is accesible as the object's function with message and payload fields.
- * 
- * @param {string} code 
- * @param {string} message 
- * @param {object} payload 
- * @param {string} description 
- */
-SmartError.register = function (code, message = DEFAULT_MESSAGE, payload = {}, description = null) {
-    registrator.register(this, code, message, payload, description);
-};
-
-/**
- * Removes the error from th object.
- * 
- * @param {string} code 
- */
-SmartError.unregister = function (code) {
-    registrator.unregister(this, code);
-};
-
-Object.defineProperties(SmartError, {
-    codes: {
-        get: () => registrator.codes()
-    },
-    docs: {
-        get: () => registrator.docs()
-    }
-});
 
 util.inherits(SmartError, Error);
 

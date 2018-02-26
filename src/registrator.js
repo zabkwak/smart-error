@@ -3,9 +3,7 @@
  */
 export default class Registrator {
 
-    constructor() {
-        this._codes = {};
-    }
+    _codes = {};
 
     /**
      * Registers the error to the SmartError object. The code is accesible as the object's function with message and payload fields.
