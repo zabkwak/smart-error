@@ -1,6 +1,5 @@
+import { expect } from 'chai';
 import Err from '../src';
-
-const expect = require('chai').expect;
 
 const MESSAGE = 'Test Error';
 const CODE = 'test';
