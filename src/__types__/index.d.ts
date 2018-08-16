@@ -49,7 +49,20 @@ declare module 'smart-error' {
                 /** Description of the error. */
                 description: string
             }
-        };
+        };        
+
+        /** 
+         * Message of the error.
+         */
+        message: string;
+        /**
+         * Code of the error.
+         */
+        code: string;
+        /**
+         * Stack trace of the error.
+         */
+        stack: string;
 
         /**
          * Creates new instance from the standard node.js Error.
