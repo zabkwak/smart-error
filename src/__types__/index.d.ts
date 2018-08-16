@@ -1,6 +1,6 @@
 declare module 'smart-error' {
 
-    export default class SmartError extends Error {
+    class SmartError extends Error {
 
         /**
          * Registers the error to the object. The code is accesible as the object's function with message and payload fields.
@@ -49,7 +49,7 @@ declare module 'smart-error' {
                 /** Description of the error. */
                 description: string
             }
-        };        
+        };
 
         /** 
          * Message of the error.
@@ -116,5 +116,10 @@ declare module 'smart-error' {
          * @param stack If true the stack trace is added to the object.
          */
         toJSON(stack: boolean): { message: string, code: string, stack?: string };
+    }
+
+    export {
+        SmartError as default,
+        SmartError
     }
 }
