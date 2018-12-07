@@ -163,4 +163,4 @@ class SmartError {
 
 util.inherits(SmartError, Error);
 
-module.exports = SmartError;
+export default SmartError;
