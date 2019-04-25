@@ -1,5 +1,11 @@
 declare module 'smart-error' {
 
+    interface IError {
+        message?: string;
+        code?: string;
+        stack?: string;
+    }
+
     class SmartError extends Error {
 
         /**
@@ -29,6 +35,12 @@ declare module 'smart-error' {
          * @param description Description of the error.
          */
         static register(code: string, message: string, payload: { [key: string]: any }, description: string): void;
+
+        /**
+         * Parses the payload from the error object.
+         * @param error Error object to parse.
+         */
+        static parsePayload<T>(error: IError & T): T;
 
         /**
          * Removes the error from th object.

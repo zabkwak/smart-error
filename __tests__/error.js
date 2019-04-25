@@ -560,3 +560,16 @@ describe('Docs', () => {
 });
 
 // TODO docs test
+
+describe('Payload parser', () => {
+
+    it('parses the payload from the SmartError instance', () => {
+        const error = new Err(MESSAGE, CODE, PAYLOAD);
+        expect(Err.parsePayload(error)).to.be.deep.equal({ field: 'test' });
+    });
+
+    it('parses the payload from the defined object', () => {
+        const error = { message: MESSAGE, field: 'test' };
+        expect(Err.parsePayload(error)).to.be.deep.equal({ field: 'test' });
+    });
+});

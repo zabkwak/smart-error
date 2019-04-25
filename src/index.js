@@ -20,7 +20,7 @@ class SmartError {
      */
     static register(code, message = DEFAULT_MESSAGE, payload = {}, description = null) {
         registrator.register(this, code, message, payload, description);
-    };
+    }
 
     /**
      * Removes the error from th object.
@@ -29,7 +29,18 @@ class SmartError {
      */
     static unregister(code) {
         registrator.unregister(this, code);
-    };
+    }
+
+    static parsePayload(error) {
+        const o = {};
+        for (let k in error) {
+            if (['message', 'code', 'stack'].indexOf(k) >= 0) {
+                continue;
+            }
+            o[k] = error[k];
+        }
+        return o;
+    }
 
     static get codes() {
         return registrator.codes();
@@ -150,14 +161,7 @@ class SmartError {
      * @returns {Object}
      */
     _parsePayload(err) {
-        const o = {};
-        for (let k in err) {
-            if (['message', 'code', 'stack'].indexOf(k) >= 0) {
-                continue;
-            }
-            o[k] = err[k];
-        }
-        return o;
+        return SmartError.parsePayload(err);
     }
 }
 
