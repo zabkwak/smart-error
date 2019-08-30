@@ -1,11 +1,11 @@
 {
   "name": "smart-error",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Subclass of Node.js Error for unification of errors.",
   "main": "index.js",
   "types": "./dist/__types__/index.d.ts",
   "scripts": {
-    "test": "mocha __tests__ --recursive --compilers js:babel-core/register",
+	"test": "./node_modules/.bin/mocha ./__tests__ --recursive --require @babel/register --exit",
     "prepublish": "./node_modules/.bin/babel ./src --out-dir ./dist --copy-files && echo module.exports = require('./dist'); > index.js",
     "postpublish": "rm -rf ./dist && rm -f ./index.js"
   },
@@ -26,11 +26,14 @@
     "error"
   ],
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
-    "chai": "^4.1.2"
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "chai": "^4.1.2",
+    "mocha": "^6.2.0"
   },
   "readme": "README.md"
 }
