@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "./dist/__types__/index.d.ts",
   "scripts": {
-	"test": "./node_modules/.bin/mocha ./__tests__ --recursive --require @babel/register --exit",
+    "test": "./node_modules/.bin/mocha ./__tests__ --recursive --require @babel/register --exit",
     "prepublish": "./node_modules/.bin/babel ./src --out-dir ./dist --copy-files && echo module.exports = require('./dist'); > index.js",
     "postpublish": "rm -rf ./dist && rm -f ./index.js"
   },

@@ -1,5 +1,3 @@
-import util from 'util';
-
 import Registrator from './registrator';
 
 const DEFAULT_MESSAGE = 'Unknown error';
@@ -18,37 +16,37 @@ class SmartError {
      * @param {object} payload 
      * @param {string} description 
      */
-    static register(code, message = DEFAULT_MESSAGE, payload = {}, description = null) {
-        registrator.register(this, code, message, payload, description);
-    }
+	static register(code, message = DEFAULT_MESSAGE, payload = {}, description = null) {
+		registrator.register(this, code, message, payload, description);
+	}
 
     /**
      * Removes the error from th object.
      * 
      * @param {string} code 
      */
-    static unregister(code) {
-        registrator.unregister(this, code);
-    }
+	static unregister(code) {
+		registrator.unregister(this, code);
+	}
 
-    static parsePayload(error) {
-        const o = {};
-        for (let k in error) {
-            if (['message', 'code', 'stack'].indexOf(k) >= 0) {
-                continue;
-            }
-            o[k] = error[k];
-        }
-        return o;
-    }
+	static parsePayload(error) {
+		const o = {};
+		for (let k in error) {
+			if (['message', 'code', 'stack'].indexOf(k) >= 0) {
+				continue;
+			}
+			o[k] = error[k];
+		}
+		return o;
+	}
 
-    static get codes() {
-        return registrator.codes();
-    }
+	static get codes() {
+		return registrator.codes();
+	}
 
-    static get docs() {
-        return registrator.docs();
-    }
+	static get docs() {
+		return registrator.docs();
+	}
 
     /**
      * @typedef ErrorObject
@@ -63,43 +61,43 @@ class SmartError {
      * @param {string} code 
      * @param {Object} payload 
      */
-    constructor(message = DEFAULT_MESSAGE, code = DEFAULT_CODE, payload = {}) {
-        let nodeError = null;
-        if (message instanceof Error) {
-            nodeError = message;
-        }
-        if (message instanceof this.constructor) {
-            const err = message;
-            message = err.message;
-            code = err.code;
-            payload = this._parsePayload(err);
-        } else if (typeof message === 'object') {
-            const err = message;
-            message = err.message || DEFAULT_MESSAGE;
-            code = err.code || code;
-            payload = err.payload || payload;
-        }
-        this.message = message;
-        this.code = this._getCode(code);
-        this._setPayload(payload);
-        if (nodeError) {
-            Object.defineProperty(this, 'stack', {
-                configurable: true,
-                value: nodeError.stack
-            });
-        } else {
-            Error.captureStackTrace(this, this.constructor);
-        }
-    }
+	constructor(message = DEFAULT_MESSAGE, code = DEFAULT_CODE, payload = {}) {
+		let nodeError = null;
+		if (message instanceof Error) {
+			nodeError = message;
+		}
+		if (message instanceof this.constructor) {
+			const err = message;
+			message = err.message;
+			code = err.code;
+			payload = this._parsePayload(err);
+		} else if (typeof message === 'object') {
+			const err = message;
+			message = err.message || DEFAULT_MESSAGE;
+			code = err.code || code;
+			payload = err.payload || payload;
+		}
+		this.message = message;
+		this.code = this._getCode(code);
+		this._setPayload(payload);
+		if (nodeError) {
+			Object.defineProperty(this, 'stack', {
+				configurable: true,
+				value: nodeError.stack
+			});
+		} else {
+			Error.captureStackTrace(this, this.constructor);
+		}
+	}
 
     /**
      * Clones current instance and creates new one.
      * 
      * @returns {SmartError}
      */
-    clone() {
-        return new this.constructor(this);
-    }
+	clone() {
+		return new this.constructor(this);
+	}
 
     /**
      * Converts the instance to JSON object. 
@@ -107,52 +105,52 @@ class SmartError {
      * @param {boolean} stack If true the stack is added in the JSON object.
      * @returns {Object}
      */
-    toJSON(stack = false) {
-        const a = [];
-        if (!stack) {
-            a.push('stack');
-        }
-        const o = {};
-        for (let k in this) {
-            if (a.indexOf(k) >= 0) {
-                continue;
-            }
-            o[k] = this[k];
-        }
-        if (stack) {
-            o.stack = this.stack;
-        }
-        return o;
-    }
+	toJSON(stack = false) {
+		const a = [];
+		if (!stack) {
+			a.push('stack');
+		}
+		const o = {};
+		for (let k in this) {
+			if (a.indexOf(k) >= 0) {
+				continue;
+			}
+			o[k] = this[k];
+		}
+		if (stack) {
+			o.stack = this.stack;
+		}
+		return o;
+	}
 
     /**
      * Gets the upper cased error with ERR_ prefix from the code. If the code already has the prefix, the code is not altered.
      * 
      * @param {string} code 
      */
-    _getCode(code) {
-        if (typeof code !== 'string') {
-            code = code.toString();
-        }
-        if (code.toLowerCase().indexOf('err_') === 0) {
-            return code.toUpperCase();
-        }
-        return `ERR_${code.toUpperCase()}`;
-    }
+	_getCode(code) {
+		if (typeof code !== 'string') {
+			code = code.toString();
+		}
+		if (code.toLowerCase().indexOf('err_') === 0) {
+			return code.toUpperCase();
+		}
+		return `ERR_${code.toUpperCase()}`;
+	}
 
     /**
      * Sets the payload fields as instance fields. Message, code and stack are ignored.
      * 
      * @param {Object} payload 
      */
-    _setPayload(payload) {
-        for (let k in payload) {
-            if (['message', 'code', 'stack'].indexOf(k) >= 0) {
-                continue;
-            }
-            this[k] = payload[k];
-        }
-    }
+	_setPayload(payload) {
+		for (let k in payload) {
+			if (['message', 'code', 'stack'].indexOf(k) >= 0) {
+				continue;
+			}
+			this[k] = payload[k];
+		}
+	}
 
     /**
      * Parses the payload from the SmartError instance.
@@ -160,11 +158,13 @@ class SmartError {
      * @param {SmartError} err 
      * @returns {Object}
      */
-    _parsePayload(err) {
-        return SmartError.parsePayload(err);
-    }
+	_parsePayload(err) {
+		return SmartError.parsePayload(err);
+	}
 }
 
-util.inherits(SmartError, Error);
+// Inheritance from nodejs util module. This should working in browser.
+SmartError.super_ = Error;
+Object.setPrototypeOf(SmartError.prototype, Error.prototype);
 
 export default SmartError;
